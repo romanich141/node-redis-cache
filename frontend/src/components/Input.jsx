@@ -10,11 +10,16 @@ const Input = ({
 }) => {
     const [value, setValue] = useInput(initialValue);
     
+    const onChange = (event) => {
+        const value = event.target.value;
+        setValue(value);
+        callback(value);
+    }
+
     return (
         <div className="input-group mb-3">
             <input 
-                onChange={ setValue }
-                onBlur={ () => callback(value) }
+                onChange={ onChange }
                 value={ value }
                 type={ type } 
                 className={ `form-control ${ className }` } 
