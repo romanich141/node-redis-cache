@@ -21,7 +21,7 @@ const getCache = async (req, res, next) => {
     try {
         const data = await redisClient.get(username);
         if (data !== null) {
-            res.json(data)
+            res.send(data)
         } else {
             next();
         }
@@ -43,7 +43,7 @@ const getRepos = async (req, res) => {
             { EX: EXPIRE_TIME, }
         );
 
-        res.json(data);
+        res.send(data);
     } catch (error) {
        res.status(500).send({ error: 'Something broke!' });
     }
