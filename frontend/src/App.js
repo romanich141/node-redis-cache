@@ -6,7 +6,7 @@ import { useState } from "react";
 import RepoInfo from "./components/RepoInfo";
 
 const App = () => {
-  const [ username, setUsername ] = useState(null);
+  const [ username, setUsername ] = useState("romanich141");
   const [ data, setData ] = useState({});
   const [ error, setError ] = useState(false);
 
@@ -21,10 +21,10 @@ const App = () => {
   }
 
   return (
-    <Form>
+    <Form onSubmit={ sendUsername }>
         <h3>Search repositories on github by username</h3>
         <Input
-           initialValue = "" 
+           initialValue = { username } 
            placeholder = "Input username"
            callback = { setUsername }
         />
