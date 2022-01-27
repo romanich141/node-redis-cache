@@ -5,6 +5,7 @@ const Input = ({
     type = "text",
     className = "",
     placeholder = "Placeholder",
+    callback = null,
     ...props 
 }) => {
     const [value, setValue] = useInput(initialValue);
@@ -13,6 +14,7 @@ const Input = ({
         <div className="input-group mb-3">
             <input 
                 onChange={ setValue }
+                onBlur={ () => callback(value) }
                 value={ value }
                 type={ type } 
                 className={ `form-control ${ className }` } 
