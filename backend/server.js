@@ -1,19 +1,32 @@
 require('dotenv').config();
-const { PORT, API, EXPIRE_TIME } = process.env;
+const { 
+    SERVER_PORT, 
+    API, 
+    EXPIRE_TIME, 
+    PORT_REDIS,
+    HOST_REDIS,
+} = process.env;
+const RedisClient = require("./redis/RedisClient");
 const app = require("express")();
 const cors = require("cors");
 const fetch = ( ...args ) => import('node-fetch').then (({ default: fetch }) => fetch ( ...args ));
-const redis = require("redis");
 
 app.use(cors());
 
-const redisClient = redis.createClient({ url: 'redis://127.0.0.1:6379' });
+// create redis client
+const redisClient = new RedisClient();
 
-const connectRedis = async () => {
-    await redisClient.connect();
-}
-
-connectRedis();
+// connect to redis client
+(async () => {
+    try {
+        await redisClient.init({ 
+            host: HOST_REDIS, 
+            port: PORT_REDIS 
+        });
+    } catch (error) {
+        throw error;
+    }
+})();
 
 const getCache = async (req, res, next) => {
     const { username } = req.params;
@@ -56,6 +69,6 @@ app.get("/", (req, res) => {
 app.get("/repos/:username", getCache, getRepos)
 
 
-app.listen(PORT, () => {
-    console.log(`server started in port ${ PORT }`)
+app.listen(SERVER_PORT, () => {
+    console.log(`server started in port ${ SERVER_PORT }`)
 })
