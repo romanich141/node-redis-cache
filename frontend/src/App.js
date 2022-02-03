@@ -12,6 +12,7 @@ const App = () => {
 
   const sendUsername = async () => {
     try {
+      setData({});
       error && setError(null);
       const response = await axios.get(`http://localhost:9876/repos/${ username }`)
       setData(response.data);
