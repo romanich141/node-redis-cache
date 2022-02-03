@@ -1,1 +1,1 @@
-docker run --name redis -p 127.0.0.1:6379:6379 -d redis 
+docker run --name redis -p 127.0.0.1:6789:6379 -d redis-cache-service 
